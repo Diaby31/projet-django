@@ -11,23 +11,21 @@ const Catalogue = () => {
         categorie: ''
     });
 
-    // Fonction pour récupérer les produits en appliquant les filtres
     const fetchProduits = useCallback(async () => {
         try {
-            const data = await getProduits(filters);  // Envoie les filtres à l'API
-            console.log('Produits:', data);  // Pour vérifier les données
-            setProduits(data);  // Met à jour les produits dans l'état
+            const data = await getProduits(filters);  
+            console.log('Produits:', data);  
+            setProduits(data);  
         } catch (error) {
             console.error("Erreur lors de la récupération des produits:", error);
         }
-    }, [filters]);  // Ajoutez "filters" comme dépendance pour rafraîchir les produits lorsqu'ils changent
+    }, [filters]);  
 
-    // Effet pour charger les produits quand la page est chargée
+   
     useEffect(() => {
         fetchProduits();
-    }, [fetchProduits]);  // Récupère les produits chaque fois que les filtres changent
+    }, [fetchProduits]);  
 
-    // Fonction pour mettre à jour les filtres à chaque changement
     const handleFilterChange = (e) => {
         const { name, value } = e.target;
         setFilters((prevFilters) => ({
@@ -38,7 +36,7 @@ const Catalogue = () => {
 
     const handleFilterSubmit = (e) => {
         e.preventDefault();
-        fetchProduits();  // Récupère les produits avec les filtres appliqués
+        fetchProduits(); 
     };
 
     return (

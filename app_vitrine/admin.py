@@ -5,7 +5,6 @@ from .models import Produit, Categorie
 class CategorieAdmin(admin.ModelAdmin):
     list_display = ('nom',)
 
-
 @admin.register(Produit)
 class ProduitAdmin(admin.ModelAdmin):
-    list_display = ('marque', 'prix', 'categorie')
+    list_display = ('nom', 'prix', 'categorie')
