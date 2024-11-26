@@ -1,21 +1,20 @@
-from rest_framework import generics
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 from .models import Produit
-from django_filters.rest_framework import DjangoFilterBackend
 from .serializers import ProduitSerializer
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import TokenAuthentication
-from .filters import ProduitFilter
 
+class ProduitListView(APIView):
+    def get(self, request, format=None):
+        produits = Produit.objects.all()
+        serializer = ProduitSerializer(produits, many=True)
+        return Response(serializer.data)
 
-class ProduitListCreateView(generics.ListCreateAPIView):
-    queryset = Produit.objects.all()
-    serializer_class = ProduitSerializer
-    permission_classes = [IsAuthenticated]
-    authentication_classes = [TokenAuthentication]
-    filter_backends = [DjangoFilterBackend]
-    filterset_class = ProduitFilter
-    
-class ProduitRetrieveUpdateDeleteView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Produit.objects.all()
-    serializer_class = ProduitSerializer
-    permission_classes = [IsAuthenticated]
+class ProduitDetailView(APIView):
+    def get(self, request, id, format=None):
+        try:
+            produit = Produit.objects.get(pk=id)
+            serializer = ProduitSerializer(produit)
+            return Response(serializer.data)
+        except Produit.DoesNotExist:
+            return Response({"detail": "Produit non trouvé"}, status=status.HTTP_404_NOT_FOUND)

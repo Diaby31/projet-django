@@ -1,25 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import API from '../api';
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { getProduitById } from '../api';
 
 const ProductDetail = () => {
-    const { id } = useParams();
+    const { id } = useParams(); // Récupération de l'ID via les paramètres d'URL
+    const navigate = useNavigate();
     const [produit, setProduit] = useState(null);
 
     useEffect(() => {
-        API.get(`produits/${id}/`)
-            .then(response => setProduit(response.data))
-            .catch(error => console.error(error));
+        const fetchProduit = async () => {
+            try {
+                const data = await getProduitById(id);
+                setProduit(data);
+            } catch (error) {
+                console.error('Erreur lors de la récupération du produit:', error);
+            }
+        };
+        fetchProduit();
     }, [id]);
 
-    if (!produit) return <p>Chargement...</p>;
+    if (!produit) {
+        return <div>Chargement du produit...</div>;
+    }
 
     return (
-        <div>
+        <div style={{ padding: '20px', color: '#fff', background: '#1a1a1a' }}>
             <h1>{produit.nom}</h1>
+            {produit.image && (
+                <img
+                    src={produit.image}
+                    alt={produit.nom}
+                    style={{ maxWidth: '300px', borderRadius: '10px' }}
+                />
+            )}
             <p>{produit.description}</p>
-            <p>Prix : {produit.prix} €</p>
-            <p>Marque : {produit.marque}</p>
+            <p><strong>Prix:</strong> {produit.prix} €</p>
+            <p><strong>Marque:</strong> {produit.marque}</p>
+            <button onClick={() => navigate('/catalogue')}>Retour</button>
         </div>
     );
 };
