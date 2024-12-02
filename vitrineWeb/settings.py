@@ -45,8 +45,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
-    'corsheaders',
     'app_vitrine',
+    'corsheaders',
+    'debug_toolbar',
+    
+   
+  
 
 ]
 
@@ -60,11 +64,18 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',  
     ],
     'DEFAULT_FILTER_BACKENDS': [
-        'django_filters.rest_framework.DjangoFilterBackend',  
+        'django_filters.rest_framework.DjangoFilterBackend', 
+        'rest_framework.filters.SearchFilter',
+ 
     ],
+    
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,  
 }
 
-
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]
 
 
 MIDDLEWARE = [
@@ -76,11 +87,20 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+
 ]
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
+
+
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR / 'media'
+
 
 ROOT_URLCONF = 'vitrineWeb.urls'
 
@@ -104,6 +124,9 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  
 ]
 
+CORS_ALLOW_ALL_ORIGINS = True
+
+
 
 WSGI_APPLICATION = 'vitrineWeb.wsgi.application'
 
@@ -115,6 +138,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        'USER': 'utilisateur',
+        'PASSWORD': 'mot_de_passe',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -154,6 +181,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / 'static'] 
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

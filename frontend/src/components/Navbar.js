@@ -3,17 +3,34 @@ import { Link } from 'react-router-dom';
 
 const Navbar = () => {
     return (
-        <nav style={{ background: '#121212', padding: '10px 20px', display: 'flex', justifyContent: 'space-between' }}>
-            <Link to="/" style={{ color: '#fff', textDecoration: 'none', fontSize: '1.5rem' }}>
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+            <Link className="navbar-brand" to="/">
                 Accueil
             </Link>
-            <div>
-                <Link to="/catalogue" style={{ marginRight: '20px', color: '#fff', textDecoration: 'none' }}>
-                    Catalogue
-                </Link>
-                <Link to="/contact" style={{ color: '#fff', textDecoration: 'none' }}>
-                    Contact
-                </Link>
+            <button
+                className="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+                <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className="collapse navbar-collapse" id="navbarNav">
+                <ul className="navbar-nav ms-auto">
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/catalogue">
+                            Catalogue
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/contact">
+                            Contact
+                        </Link>
+                    </li>
+                </ul>
             </div>
         </nav>
     );

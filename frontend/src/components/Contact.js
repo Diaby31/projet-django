@@ -52,5 +52,26 @@ const Contact = () => {
         </div>
     );
 };
+<form>
+  <div className="form-group">
+    <label htmlFor="name">Nom :</label>
+    <input
+      type="text"
+      id="name"
+      className="form-control"
+      placeholder="Votre nom"
+    />
+  </div>
+  <div className="form-group">
+    <label htmlFor="email">Email :</label>
+    <input
+      type="email"
+      id="email"
+      className="form-control"
+      placeholder="Votre email"
+    />
+  </div>
+  <button type="submit" className="btn btn-success mt-3">Envoyer</button>
+</form>
 
 export default Contact;

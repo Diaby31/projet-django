@@ -1,9 +1,11 @@
 import axios from 'axios';
 
+// Créez une instance Axios avec une configuration de base
 const API = axios.create({
     baseURL: 'http://127.0.0.1:8000/api/v1/',  
 });
 
+// Intercepteur pour ajouter un token JWT ou une clé d'authentification
 API.interceptors.request.use(config => {
     const token = localStorage.getItem('token'); 
     if (token) {
@@ -14,6 +16,7 @@ API.interceptors.request.use(config => {
     return Promise.reject(error);
 });
 
+// Fonction pour obtenir la liste des produits avec des filtres
 export const getProduits = async (filters = {}) => {
     try {
         const response = await API.get('produits/', { params: filters });
@@ -24,6 +27,7 @@ export const getProduits = async (filters = {}) => {
     }
 };
 
+// Fonction pour obtenir les détails d'un produit par son ID
 export const getProduitById = async (id) => {
     try {
         const response = await API.get(`produits/${id}/`);
@@ -34,22 +38,16 @@ export const getProduitById = async (id) => {
     }
 };
 
+// Fonction pour créer un produit
 export const createProduit = async (produitData) => {
-    try {
-        const response = await axios.post('/api/v1/produits/', produitData);
-        return response.data;
-    } catch (error) {
-        console.error("Erreur lors de la création du produit:", error);
-        throw error;
-    }
-};
-export const addProduit = async (produitData) => {
     try {
         const response = await API.post('produits/', produitData);
         return response.data;
     } catch (error) {
-        console.error('Erreur lors de l\'ajout du produit :', error);
+        console.error('Erreur lors de la création du produit :', error);
         throw error;
     }
 };
+
+// Export par défaut de l'instance Axios
 export default API;

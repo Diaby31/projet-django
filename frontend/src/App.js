@@ -5,6 +5,8 @@ import Catalogue from './components/Catalogue';
 import Contact from './components/Contact';
 import ProductDetail from './components/ProductDetail';
 import Navbar from './components/Navbar';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const App = () => {
     return (
